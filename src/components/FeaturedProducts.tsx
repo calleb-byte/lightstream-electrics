@@ -12,8 +12,8 @@ const FeaturedProducts = () => {
       id: 1,
       name: "Smart LED Bulb Set",
       description: "Energy-efficient smart bulbs with app control",
-      price: 89.99,
-      originalPrice: 119.99,
+      price: 8999,
+      originalPrice: 11999,
       rating: 4.8,
       reviews: 124,
       image: ledBulbs,
@@ -24,7 +24,7 @@ const FeaturedProducts = () => {
       id: 2,
       name: "Premium Wall Switch Collection",
       description: "Modern design switches with LED indicators",
-      price: 24.99,
+      price: 2499,
       originalPrice: null,
       rating: 4.9,
       reviews: 89,
@@ -36,8 +36,8 @@ const FeaturedProducts = () => {
       id: 3,
       name: "Professional Circuit Breaker",
       description: "Industrial grade safety protection",
-      price: 149.99,
-      originalPrice: 179.99,
+      price: 14999,
+      originalPrice: 17999,
       rating: 4.7,
       reviews: 67,
       image: circuitBreakers,
@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
       id: 4,
       name: "RGB LED Strip Kit",
       description: "Flexible lighting with color changing",
-      price: 69.99,
+      price: 6999,
       originalPrice: null,
       rating: 4.6,
       reviews: 156,
@@ -150,11 +150,11 @@ const FeaturedProducts = () => {
                 {/* Price */}
                 <div className="flex items-center space-x-2">
                   <span className="text-xl font-bold text-primary">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   {product.originalPrice && (
                     <span className="text-sm text-muted-foreground line-through">
-                      ${product.originalPrice}
+                      KSh {product.originalPrice.toLocaleString()}
                     </span>
                   )}
                 </div>
