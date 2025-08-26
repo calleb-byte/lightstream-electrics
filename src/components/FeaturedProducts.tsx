@@ -1,4 +1,4 @@
-import { Star, ShoppingCart, Heart } from "lucide-react";
+import { Star, ShoppingCart, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ledBulbs from "@/assets/led-bulbs.jpg";
@@ -87,7 +87,7 @@ const FeaturedProducts = () => {
           {products.map((product, index) => (
             <div
               key={product.id}
-              className={`card-product p-6 relative animate-fade-in`}
+              className={`card-product group p-6 relative animate-fade-in`}
               style={{ animationDelay: `${index * 150}ms` }}
             >
               {/* Badge */}
@@ -182,8 +182,5 @@ const FeaturedProducts = () => {
     </section>
   );
 };
-
-// Import ArrowRight from lucide-react
-import { ArrowRight } from "lucide-react";
 
 export default FeaturedProducts;

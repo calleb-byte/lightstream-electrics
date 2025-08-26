@@ -142,7 +142,7 @@ All colors MUST be HSL for proper theming support.
   }
   
   .card-product {
-    @apply card-elevated group cursor-pointer hover:scale-[1.02] hover:shadow-xl;
+    @apply card-elevated cursor-pointer hover:scale-[1.02] hover:shadow-xl;
     transition: var(--transition-smooth);
   }
   
