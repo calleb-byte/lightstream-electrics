@@ -1,5 +1,6 @@
 import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroChandelier from "@/assets/hero-chandelier.jpg";
 
 const HeroSection = () => {
@@ -28,13 +29,17 @@ const HeroSection = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <Button className="btn-hero group">
-                Shop Now
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button variant="outline" className="bg-white/10 border-white/20 hover:bg-white/20 text-white">
-                View Catalog
-              </Button>
+              <Link to="/shop">
+                <Button className="btn-hero group w-full sm:w-auto">
+                  Shop Now
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/catalog">
+                <Button variant="outline" className="bg-white/10 border-white/20 hover:bg-white/20 text-white w-full sm:w-auto">
+                  View Catalog
+                </Button>
+              </Link>
             </div>
             
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/20">
