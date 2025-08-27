@@ -1,12 +1,31 @@
 import { Star, ShoppingCart, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 import ledBulbs from "@/assets/led-bulbs.jpg";
 import wallSwitches from "@/assets/wall-switches.jpg";
 import circuitBreakers from "@/assets/circuit-breakers.jpg";
 import ledStrips from "@/assets/led-strips.jpg";
 
 const FeaturedProducts = () => {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: `KSh ${product.price.toLocaleString()}`,
+      image: product.image,
+      category: "Featured"
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
   const products = [
     {
       id: 1,
@@ -163,6 +182,7 @@ const FeaturedProducts = () => {
                 <Button 
                   className="w-full group/cart" 
                   disabled={!product.inStock}
+                  onClick={() => handleAddToCart(product)}
                 >
                   <ShoppingCart className="mr-2 h-4 w-4 group-hover/cart:scale-110 transition-transform" />
                   {product.inStock ? "Add to Cart" : "Out of Stock"}

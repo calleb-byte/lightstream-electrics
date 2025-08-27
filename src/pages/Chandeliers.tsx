@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import heroChandelier from "@/assets/hero-chandelier.jpg";
@@ -11,6 +13,23 @@ import heroChandelier from "@/assets/hero-chandelier.jpg";
 const Chandeliers = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [priceRange, setPriceRange] = useState([0, 50000]);
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: `KSh ${product.price.toLocaleString()}`,
+      image: product.image,
+      category: "Chandeliers"
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
 
   const chandeliers = [
     {
@@ -249,7 +268,10 @@ const Chandeliers = () => {
                   </div>
 
                   {/* Add to Cart Button */}
-                  <Button className="w-full group/cart">
+                  <Button 
+                    className="w-full group/cart"
+                    onClick={() => handleAddToCart(product)}
+                  >
                     <ShoppingCart className="mr-2 h-4 w-4 group-hover/cart:scale-110 transition-transform" />
                     Add to Cart
                   </Button>

@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, ShoppingCart, Star, Filter } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 import chandeliersImg from "@/assets/hero-chandelier.jpg";
 import ledBulbsImg from "@/assets/led-bulbs.jpg";
 import ledStripsImg from "@/assets/led-strips.jpg";
@@ -74,6 +76,24 @@ const products = [
 ];
 
 const Shop = () => {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -181,7 +201,10 @@ const Shop = () => {
                       </div>
                     </div>
                     
-                    <Button className="w-full bg-accent hover:bg-accent/90 text-white">
+                    <Button 
+                      className="w-full bg-accent hover:bg-accent/90 text-white"
+                      onClick={() => handleAddToCart(product)}
+                    >
                       <ShoppingCart className="h-4 w-4 mr-2" />
                       Add to Cart
                     </Button>
