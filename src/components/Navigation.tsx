@@ -155,13 +155,13 @@ const Navigation = () => {
                         <div className="flex justify-between items-center text-lg font-semibold">
                           <span>Total: ${state.totalPrice.toFixed(2)}</span>
                         </div>
-                        <div className="grid grid-cols-1 gap-2 w-full">
-                          <Button className="w-full" size="lg">
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full">
+                          <Button className="w-full flex-1 h-11" size="lg">
                             Checkout
                           </Button>
                           <Button 
                             variant="outline" 
-                            className="w-full" 
+                            className="w-full sm:w-auto sm:min-w-[120px] h-11" 
                             onClick={clearCart}
                           >
                             Clear Cart
