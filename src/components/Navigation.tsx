@@ -66,7 +66,7 @@ const Navigation = () => {
 
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="relative">
+            <Button variant="ghost" size="sm" className="relative hidden sm:flex md:flex lg:flex">
               <Heart className="h-5 w-5" />
               <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 0
