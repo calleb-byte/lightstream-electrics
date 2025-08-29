@@ -13,6 +13,7 @@ import ShowersHeaters from "./pages/ShowersHeaters";
 import Categories from "./pages/Categories";
 import Shop from "./pages/Shop";
 import Catalog from "./pages/Catalog";
+import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,19 +25,20 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chandeliers" element={<Chandeliers />} />
-          <Route path="/led-lights" element={<LEDLights />} />
-          <Route path="/switches" element={<Switches />} />
-          <Route path="/circuit-breakers" element={<CircuitBreakers />} />
-          <Route path="/showers-heaters" element={<ShowersHeaters />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/catalog" element={<Catalog />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+         <Routes>
+           <Route path="/" element={<Index />} />
+           <Route path="/chandeliers" element={<Chandeliers />} />
+           <Route path="/led-lights" element={<LEDLights />} />
+           <Route path="/switches" element={<Switches />} />
+           <Route path="/circuit-breakers" element={<CircuitBreakers />} />
+           <Route path="/showers-heaters" element={<ShowersHeaters />} />
+           <Route path="/categories" element={<Categories />} />
+           <Route path="/shop" element={<Shop />} />
+           <Route path="/catalog" element={<Catalog />} />
+           <Route path="/checkout" element={<Checkout />} />
+           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+           <Route path="*" element={<NotFound />} />
+         </Routes>
       </BrowserRouter>
       </TooltipProvider>
     </CartProvider>

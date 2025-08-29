@@ -156,8 +156,10 @@ const Navigation = () => {
                           <span>Total: ${state.totalPrice.toFixed(2)}</span>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full">
-                          <Button className="w-full flex-1 h-11" size="lg">
-                            Checkout
+                          <Button className="w-full flex-1 h-11" size="lg" asChild>
+                            <a href="/checkout">
+                              Checkout
+                            </a>
                           </Button>
                           <Button 
                             variant="outline" 
