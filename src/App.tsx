@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
+import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import Index from "./pages/Index";
 import Chandeliers from "./pages/Chandeliers";
 import LEDLights from "./pages/LEDLights";
@@ -20,8 +21,9 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <CartProvider>
-      <TooltipProvider>
+    <FavoritesProvider>
+      <CartProvider>
+        <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -39,9 +41,10 @@ const App = () => (
            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
            <Route path="*" element={<NotFound />} />
          </Routes>
-      </BrowserRouter>
-      </TooltipProvider>
-    </CartProvider>
+       </BrowserRouter>
+        </TooltipProvider>
+      </CartProvider>
+    </FavoritesProvider>
   </QueryClientProvider>
 );
 
