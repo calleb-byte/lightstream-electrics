@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import ledBulbs from "@/assets/led-bulbs.jpg";
 import wallSwitches from "@/assets/wall-switches.jpg";
 import circuitBreakers from "@/assets/circuit-breakers.jpg";
@@ -8,6 +9,7 @@ import showerHeater from "@/assets/shower-heater.jpg";
 import heroChandelier from "@/assets/hero-chandelier.jpg";
 
 const CategorySection = () => {
+  const navigate = useNavigate();
   const categories = [
     {
       name: "Chandeliers",
@@ -94,6 +96,7 @@ const CategorySection = () => {
               <Button 
                 variant="ghost" 
                 className="group/btn hover:text-primary p-0 h-auto font-semibold text-sm sm:text-base"
+                onClick={() => navigate(category.href)}
               >
                 <span className="hidden sm:inline">Explore Products</span>
                 <span className="sm:hidden">Explore</span>
@@ -104,7 +107,12 @@ const CategorySection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="group">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="group"
+            onClick={() => navigate("/categories")}
+          >
             View All Categories
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
