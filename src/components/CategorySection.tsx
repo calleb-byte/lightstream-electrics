@@ -93,10 +93,11 @@ const CategorySection = () => {
               
               <Button 
                 variant="ghost" 
-                className="group/btn hover:text-primary p-0 h-auto font-semibold"
+                className="group/btn hover:text-primary p-0 h-auto font-semibold text-sm sm:text-base"
               >
-                Explore Products
-                <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                <span className="hidden sm:inline">Explore Products</span>
+                <span className="sm:hidden">Explore</span>
+                <ArrowRight className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4 group-hover/btn:translate-x-1 transition-transform" />
               </Button>
             </div>
           ))}
