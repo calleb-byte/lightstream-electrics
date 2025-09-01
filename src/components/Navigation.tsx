@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Search, ShoppingCart, User, Menu, X, Heart, Minus, Plus, Trash2 } from "lucide-react";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
@@ -9,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { favoriteCount } = useFavorites();
   const navItems = [{
     name: "Home",
     href: "/"
@@ -74,7 +76,7 @@ const Navigation = () => {
             <Button variant="ghost" size="sm" className="relative hidden sm:flex md:flex lg:flex">
               <Heart className="h-5 w-5" />
               <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
+                {favoriteCount}
               </span>
             </Button>
             <Sheet>
