@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Star, ShoppingCart, Heart, Filter, Grid, List, Droplets, Flame } from "lucide-react";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -14,6 +15,7 @@ const ShowersHeaters = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [priceRange, setPriceRange] = useState([0, 30000]);
   const { addToCart } = useCart();
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { toast } = useToast();
 
   const handleAddToCart = (product: any) => {
@@ -228,9 +230,36 @@ const ShowersHeaters = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute top-4 right-4 z-10 h-8 w-8 p-0 bg-white/80 hover:bg-white group"
+                  className={`absolute top-4 right-4 z-10 h-8 w-8 p-0 bg-white/80 hover:bg-white group ${
+                    isFavorite(product.id.toString()) ? 'text-destructive' : ''
+                  }`}
+                  onClick={() => {
+                    const productData = {
+                      id: product.id.toString(),
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                      rating: product.rating
+                    };
+                    
+                    if (isFavorite(product.id.toString())) {
+                      removeFromFavorites(product.id.toString());
+                      toast({
+                        title: "Removed from Favorites",
+                        description: `${product.name} has been removed from your favorites.`,
+                      });
+                    } else {
+                      addToFavorites(productData);
+                      toast({
+                        title: "Added to Favorites",
+                        description: `${product.name} has been added to your favorites.`,
+                      });
+                    }
+                  }}
                 >
-                  <Heart className="h-4 w-4 group-hover:text-destructive transition-colors" />
+                  <Heart className={`h-4 w-4 group-hover:text-destructive transition-colors ${
+                    isFavorite(product.id.toString()) ? 'fill-current' : ''
+                  }`} />
                 </Button>
 
                 {/* Product Image */}
