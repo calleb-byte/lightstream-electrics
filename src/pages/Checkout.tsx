@@ -1,119 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, ShoppingBag, User, MapPin, Phone, Mail, Calendar } from 'lucide-react';
-
-interface OrderFormData {
-  fullName: string;
-  email: string;
-  phone: string;
-  deliveryType: 'delivery' | 'pickup';
-  address: string;
-  city: string;
-  postalCode: string;
-  preferredDate: string;
-  preferredTime: string;
-  specialInstructions: string;
-}
+import { ArrowLeft, ShoppingBag, Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 const Checkout = () => {
-  const { state, clearCart } = useCart();
+  const { state } = useCart();
   const { items, totalPrice } = state;
-  const { toast } = useToast();
 
-  const [formData, setFormData] = useState<OrderFormData>({
-    fullName: '',
-    email: '',
-    phone: '',
-    deliveryType: 'delivery',
-    address: '',
-    city: '',
-    postalCode: '',
-    preferredDate: '',
-    preferredTime: '',
-    specialInstructions: '',
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleCallSeller = () => {
+    window.open('tel:+1234567890', '_self');
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Basic validation
-    if (!formData.fullName || !formData.email || !formData.phone) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields",
-        variant: "destructive"
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (formData.deliveryType === 'delivery' && (!formData.address || !formData.city)) {
-      toast({
-        title: "Error", 
-        description: "Please provide delivery address details",
-        variant: "destructive"
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Prepare complete order data
-    const completeOrderData = {
-      ...formData,
-      items: items,
-      totalAmount: totalPrice,
-      orderDate: new Date().toISOString(),
-    };
-
-    try {
-      // Log the data for your backend integration
-      console.log('Order Data for Backend:', completeOrderData);
-
-      toast({
-        title: "Order Submitted Successfully!",
-        description: "Your order details have been sent to the seller. You will receive a confirmation email shortly.",
-      });
-
-      // Clear cart
-      clearCart();
-
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit order. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -139,8 +39,8 @@ const Checkout = () => {
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Checkout</h1>
-          <p className="text-muted-foreground">Complete your order details below</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Contact for Delivery</h1>
+          <p className="text-muted-foreground">Call us to arrange delivery for your selected items</p>
         </div>
 
         {items.length === 0 ? (
@@ -148,7 +48,7 @@ const Checkout = () => {
             <CardContent className="text-center py-8">
               <ShoppingBag className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
               <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
-              <p className="text-muted-foreground">Add some items to your cart before placing an order.</p>
+              <p className="text-muted-foreground">Add some items to your cart before contacting us.</p>
             </CardContent>
           </Card>
         ) : (
@@ -158,7 +58,7 @@ const Checkout = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ShoppingBag className="h-5 w-5" />
-                  Order Summary
+                  Your Selected Items
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -174,176 +74,91 @@ const Checkout = () => {
                   ))}
                   <Separator />
                   <div className="flex justify-between items-center text-lg font-bold">
-                    <span>Total:</span>
+                    <span>Estimated Total:</span>
                     <span>${totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Order Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Customer Information */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    Customer Information
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="fullName">Full Name *</Label>
-                      <Input
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Contact Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Phone className="h-5 w-5" />
+                  Contact Our Sales Team
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="text-center">
+                  <p className="text-muted-foreground mb-6">
+                    Ready to complete your order? Our sales team will help you with delivery arrangements, 
+                    pricing details, and answer any questions about your selected items.
+                  </p>
+                  
+                  <Button 
+                    onClick={handleCallSeller}
+                    size="lg"
+                    className="w-full max-w-sm h-14 text-lg font-semibold"
+                  >
+                    <Phone className="h-5 w-5 mr-2" />
+                    Call Now: (123) 456-7890
+                  </Button>
+                </div>
 
-              {/* Delivery Information */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5" />
-                    Delivery Information
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="deliveryType">Delivery Type</Label>
-                    <Select value={formData.deliveryType} onValueChange={(value) => handleSelectChange('deliveryType', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="delivery">Home Delivery</SelectItem>
-                        <SelectItem value="pickup">Store Pickup</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <Separator />
 
-                  {formData.deliveryType === 'delivery' && (
-                    <>
+                {/* Contact Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Phone className="h-5 w-5 text-primary" />
                       <div>
-                        <Label htmlFor="address">Street Address *</Label>
-                        <Input
-                          id="address"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          required={formData.deliveryType === 'delivery'}
-                        />
+                        <p className="font-medium">Phone</p>
+                        <p className="text-muted-foreground">(123) 456-7890</p>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="city">City *</Label>
-                          <Input
-                            id="city"
-                            name="city"
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            required={formData.deliveryType === 'delivery'}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="postalCode">Postal Code</Label>
-                          <Input
-                            id="postalCode"
-                            name="postalCode"
-                            value={formData.postalCode}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Order Preferences */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5" />
-                    Order Preferences
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="preferredDate">Preferred Date</Label>
-                      <Input
-                        id="preferredDate"
-                        name="preferredDate"
-                        type="date"
-                        value={formData.preferredDate}
-                        onChange={handleInputChange}
-                      />
                     </div>
-                    <div>
-                      <Label htmlFor="preferredTime">Preferred Time</Label>
-                      <Select value={formData.preferredTime} onValueChange={(value) => handleSelectChange('preferredTime', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select time" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="morning">Morning (9 AM - 12 PM)</SelectItem>
-                          <SelectItem value="afternoon">Afternoon (12 PM - 5 PM)</SelectItem>
-                          <SelectItem value="evening">Evening (5 PM - 8 PM)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    
+                    <div className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="font-medium">Email</p>
+                        <p className="text-muted-foreground">sales@electricpro.com</p>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <Label htmlFor="specialInstructions">Special Instructions</Label>
-                    <Textarea
-                      id="specialInstructions"
-                      name="specialInstructions"
-                      value={formData.specialInstructions}
-                      onChange={handleInputChange}
-                      placeholder="Any special delivery instructions or product preferences..."
-                      rows={3}
-                    />
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="font-medium">Business Hours</p>
+                        <p className="text-muted-foreground">Mon - Fri: 8AM - 6PM</p>
+                        <p className="text-muted-foreground">Sat: 9AM - 4PM</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <MapPin className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="font-medium">Service Area</p>
+                        <p className="text-muted-foreground">Local delivery available</p>
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
 
-              {/* Submit Button */}
-              <div className="flex justify-end">
-                <Button type="submit" disabled={isSubmitting} className="min-w-[200px]">
-                  {isSubmitting ? 'Submitting Order...' : `Submit Order ($${totalPrice.toFixed(2)})`}
-                </Button>
-              </div>
-            </form>
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">What to mention when you call:</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• The items in your cart and quantities needed</li>
+                    <li>• Your delivery address and preferred timing</li>
+                    <li>• Any specific installation or setup requirements</li>
+                    <li>• Questions about warranty or technical specifications</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>
