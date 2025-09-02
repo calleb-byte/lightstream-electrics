@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CheckoutForm from '@/components/CheckoutForm';
+import OrderForm from '@/components/OrderForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -34,7 +34,7 @@ const Checkout = () => {
           <p className="text-muted-foreground">Complete your order details below</p>
         </div>
 
-        <CheckoutForm />
+        <OrderForm />
       </div>
     </div>
   );
