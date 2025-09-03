@@ -73,7 +73,7 @@ const HeroSection = () => {
                     <h3 className="font-semibold text-charcoal">Premium Chandeliers</h3>
                     <p className="text-sm text-muted-foreground">Starting from $299</p>
                   </div>
-                  <Button size="sm" className="btn-primary">
+                  <Button size="sm" className="btn-primary text-xs sm:text-sm lg:text-base">
                     View Collection
                   </Button>
                 </div>
